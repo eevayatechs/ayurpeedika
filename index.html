@@ -356,6 +356,157 @@
 
             </div>
 
+            
+            <!-- FINANCIAL REPORTS & EXCEL DOWNLOAD HUB -->
+            <div id="reportsSection" class="glass-card rounded-2xl p-5 sm:p-6 border border-emerald-500/20 bg-gradient-to-b from-slate-900/90 to-slate-900/60 shadow-xl">
+                
+                <!-- Section Header -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-800">
+                    <div class="flex items-start sm:items-center gap-3">
+                        <span class="p-3 rounded-2xl bg-emerald-500/10 text-emerald-400 text-2xl border border-emerald-500/20 shadow-inner">📑</span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-xl sm:text-2xl font-bold text-white">ഫിനാൻഷ്യൽ റിപ്പോർട്ടുകൾ & എക്സൽ എക്സ്പോർട്ട്</h3>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Excel (.xlsx)</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-0.5">എല്ലാത്തരം ബിസിനസ്സ്, അക്കൗണ്ടിംഗ്, സെറ്റിൽമെന്റ് റിപ്പോർട്ടുകളും നേരിട്ട് എക്സൽ ആയി ഡൗൺലോഡ് ചെയ്യാം</p>
+                        </div>
+                    </div>
+
+                    <!-- Master Excel All-in-One Button -->
+                    <button onclick="exportMasterExcel()" class="flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-950/60 transition-all transform hover:-translate-y-0.5 active:translate-y-0 border border-emerald-400/30">
+                        <svg class="w-5 h-5 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span>സമ്പൂർണ്ണ എക്സൽ പാക്കേജ് (7 Sheets Master Excel)</span>
+                    </button>
+                </div>
+
+                <!-- Quick Report Cards Grid (8 Specialized Reports) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
+                    
+                    <!-- Report 1: Monthly P&L -->
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 hover:border-emerald-500/40 transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl group-hover:scale-110 transition-transform">📊</span>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Monthly</span>
+                            </div>
+                            <h4 class="font-bold text-white text-sm">പ്രതിമാസ ലാഭനഷ്ടം (Monthly P&L)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">15 മാസങ്ങളിലെ വരുമാനം, ചെലവ്, നെറ്റ് ലാഭം, എൻട്രികളുടെ എണ്ണം എന്നിവ അടങ്ങിയ റിപ്പോർട്ട്.</p>
+                        </div>
+                        <button onclick="exportMonthlyExcel()" class="mt-4 w-full py-2 px-3 rounded-lg bg-slate-700/80 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                            <span>📥 ഡൗൺലോഡ് എക്സൽ</span>
+                        </button>
+                    </div>
+
+                    <!-- Report 2: Settlement & Equity -->
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 hover:border-emerald-500/40 transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl group-hover:scale-110 transition-transform">🤝</span>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">Settlement</span>
+                            </div>
+                            <h4 class="font-bold text-white text-sm">സെറ്റിൽമെന്റ് കണക്ക് (Settlement)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">50:50 വിഹിതം, ഇർഷാദ് നൽകേണ്ടത് (₹10,488.31), ഷോപ്പ് ക്യാഷ് വഴി ഉവൈസിന് ലഭിക്കേണ്ട തുക എന്നിവ.</p>
+                        </div>
+                        <button onclick="exportSettlementExcel()" class="mt-4 w-full py-2 px-3 rounded-lg bg-slate-700/80 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                            <span>📥 ഡൗൺലോഡ് എക്സൽ</span>
+                        </button>
+                    </div>
+
+                    <!-- Report 3: Counter Cash Book -->
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 hover:border-emerald-500/40 transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl group-hover:scale-110 transition-transform">🏪</span>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">Cash Book</span>
+                            </div>
+                            <h4 class="font-bold text-white text-sm">കൗണ്ടർ ക്യാഷ് ബുക്ക് (Cash Book)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">കൗണ്ടർ ക്യാഷ് വരുമാനവും, ക്യാഷ് എടുത്ത ചെലവുകളും ബാക്കി റണ്ണിംഗ് ബാലൻസും (Day Book).</p>
+                        </div>
+                        <button onclick="exportCounterCashExcel()" class="mt-4 w-full py-2 px-3 rounded-lg bg-slate-700/80 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                            <span>📥 ഡൗൺലോഡ് എക്സൽ</span>
+                        </button>
+                    </div>
+
+                    <!-- Report 4: Expense Categories -->
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 hover:border-emerald-500/40 transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl group-hover:scale-110 transition-transform">🏷️</span>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">Categories</span>
+                            </div>
+                            <h4 class="font-bold text-white text-sm">ചെലവ് വിഭാഗങ്ങൾ (Category Split)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">ക്ലിനിക്ക്, പരസ്യം, ശമ്പളം, പാക്കിംഗ്, സ്റ്റോക്ക് മുതലായവ ഇനം തിരിച്ചുള്ള തുകയും ശതമാനവും.</p>
+                        </div>
+                        <button onclick="exportCategoryExcel()" class="mt-4 w-full py-2 px-3 rounded-lg bg-slate-700/80 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                            <span>📥 ഡൗൺലോഡ് എക്സൽ</span>
+                        </button>
+                    </div>
+
+                    <!-- Report 5: IRS Expense Ledger -->
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 hover:border-emerald-500/40 transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl group-hover:scale-110 transition-transform">👤</span>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">Irshad (IRS)</span>
+                            </div>
+                            <h4 class="font-bold text-white text-sm">ഇർഷാദ് ചെലവുകൾ (IRS Ledger)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">ഇർഷാദ് നേരിട്ട് സ്വന്തം പോക്കറ്റിൽ നിന്ന് ചെലവഴിച്ച മുഴുവൻ എൻട്രികളുടെയും ലിസ്റ്റ് (₹30,091).</p>
+                        </div>
+                        <button onclick="exportIrsExcel()" class="mt-4 w-full py-2 px-3 rounded-lg bg-slate-700/80 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                            <span>📥 ഡൗൺലോഡ് എക്സൽ</span>
+                        </button>
+                    </div>
+
+                    <!-- Report 6: USK Expense Ledger -->
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 hover:border-emerald-500/40 transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl group-hover:scale-110 transition-transform">👤</span>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">Uvais (USK)</span>
+                            </div>
+                            <h4 class="font-bold text-white text-sm">ഉവൈസ് ചെലവുകൾ (USK Ledger)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">ഉവൈസ് നേരിട്ട് ചെലവഴിച്ച എല്ലാ ചെലവുകളുടെയും തിയ്യതി തിരിച്ചുള്ള വിവരണം (₹36,78,967.66).</p>
+                        </div>
+                        <button onclick="exportUskExcel()" class="mt-4 w-full py-2 px-3 rounded-lg bg-slate-700/80 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                            <span>📥 ഡൗൺലോഡ് എക്സൽ</span>
+                        </button>
+                    </div>
+
+                    <!-- Report 7: Online Sales Ledger -->
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 hover:border-emerald-500/40 transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl group-hover:scale-110 transition-transform">🛒</span>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">Online Sales</span>
+                            </div>
+                            <h4 class="font-bold text-white text-sm">ഓൺലൈൻ വരുമാനം (Online Sales)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">മീഷോ, ഷോപ്പിഫൈ തുടങ്ങിയ ഓൺലൈൻ പ്ലാറ്റ്‌ഫോമുകൾ വഴി ലഭിച്ച എല്ലാ വരുമാന രേഖകളും.</p>
+                        </div>
+                        <button onclick="exportOnlineSalesExcel()" class="mt-4 w-full py-2 px-3 rounded-lg bg-slate-700/80 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                            <span>📥 ഡൗൺലോഡ് എക്സൽ</span>
+                        </button>
+                    </div>
+
+                    <!-- Report 8: Master All Transactions -->
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 hover:border-emerald-500/40 transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl group-hover:scale-110 transition-transform">📋</span>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Master All</span>
+                            </div>
+                            <h4 class="font-bold text-white text-sm">ഫുൾ ഇടപാടുകൾ (Master Ledger)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">15 മാസങ്ങളിലെ 1,100+ എല്ലാ ഇടപാടുകളും (തിയ്യതി, വിവരണം, ചെലവ്, വരുമാനം) ഒറ്റ ഫയലിൽ.</p>
+                        </div>
+                        <button onclick="exportAllTransactionsExcel()" class="mt-4 w-full py-2 px-3 rounded-lg bg-slate-700/80 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                            <span>📥 ഡൗൺലോഡ് എക്സൽ</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+
             <!-- Detailed Transactions & Monthly Table -->
             <div class="glass-card rounded-2xl p-5 sm:p-6">
                 
@@ -375,6 +526,10 @@
                         </select>
 
                         <!-- Payer Selector -->
+                        <button onclick="exportFilteredTableExcel()" class="bg-emerald-600/20 border border-emerald-500/40 hover:bg-emerald-600 text-emerald-300 hover:text-white rounded-lg px-3 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            <span>ഈ ലിസ്റ്റ് എക്സൽ ആക്കുക (Export)</span>
+                        </button>
                         <select id="payerSelect" onchange="renderTable()" class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-brand-500">
                             <option value="ALL">എല്ലാ ചെലവുകളും (All Payers)</option>
                             <option value="USK">USK (ഉവൈസ് / Blank)</option>
@@ -1074,5 +1229,527 @@
         // Initialize Authentication on load
         window.addEventListener('DOMContentLoaded', checkAuth);
     </script>
+
+    <!-- SheetJS CDN for Client-Side Excel (.xlsx) Generation -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <script>
+    // ==========================================
+    // EXCEL REPORT GENERATION ENGINE (ആയുർപീടിക)
+    // ==========================================
+
+    function categorizeExpense(desc) {
+        const d = (desc || '').toLowerCase();
+        if (d.includes('marketing') || d.includes('insta') || d.includes(' ad') || d.startsWith('ad') || d.includes('promo') || d.includes('facebook') || d.includes('fb')) {
+            return 'മാർക്കറ്റിംഗ് & പരസ്യം (Marketing & Ads)';
+        }
+        if (d.includes('op') || d.includes('opd') || d.includes('ipd') || d.includes('ope')) {
+            return 'ക്ലിനിക്ക് & ഒ.പി ചെലവ് (Clinic & OP Expenses)';
+        }
+        if (d.includes('salary') || d.includes('uppachi') || d.includes('staff') || d.includes('wage') || d.startsWith('work')) {
+            return 'ശമ്പളം & വേതനം (Salary & Labor)';
+        }
+        if (d.includes('pack') || d.includes('courier') || d.includes('cover') || d.includes('bubble') || d.includes('meterial') || d.includes('box') || d.includes('tape')) {
+            return 'പാക്കിംഗ് & കൊറിയർ (Packaging & Logistics)';
+        }
+        if (d.includes('print') || d.includes('ptiny') || d.includes('book')) {
+            return 'പ്രിന്റിംഗ് & സ്റ്റേഷനറി (Printing & Stationery)';
+        }
+        if (d.includes('gst') || d.includes('tax')) {
+            return 'നികുതി & ജിഎസ്ടി (Tax & GST)';
+        }
+        if (d.includes('ta') || d.includes('travel') || d.includes('petrol') || d.includes('diesel')) {
+            return 'യാത്രാ ചെലവ് (Travel & Conveyance)';
+        }
+        if (d.includes('shop') || d.includes('bsnl') || d.includes('rent') || d.includes('current') || d.includes('eb') || d.includes('light') || d.includes('insulation') || d.includes('shopify')) {
+            return 'ഷോപ്പ് & യൂട്ടിലിറ്റി (Shop & Utilities)';
+        }
+        if (d.includes('soap') || d.includes('shamp') || d.includes('medicine') || d.includes('combo') || d.includes('nalpa') || d.includes('oil') || d.includes('product') || d.includes('keychain') || d.includes('doll') || d.includes('single') || d.includes('dp price') || d.includes('stock') || d.includes('pur') || d.includes('tirur') || d.includes('tvm') || d.includes('baby') || d.includes('skin') || d.includes('item') || d.includes('ayyap') || d.includes('nili')) {
+            return 'സ്റ്റോക്ക് & പ്രൊഡക്റ്റ് പർച്ചേസ് (Stock & Products)';
+        }
+        if (d.includes('to irsh') || d.includes('to salahu')) {
+            return 'പങ്കാളി കൈമാറ്റങ്ങൾ (Partner Transfers)';
+        }
+        return 'മറ്റ് ചെലവുകൾ (Other Expenses)';
+    }
+
+    // Helper: Build Summary Sheet AOA
+    function buildSummaryAOA(summary) {
+        return [
+            ['ആയുർപീടിക 50:50 പാർട്ണർഷിപ്പ് - സമഗ്ര ബിസിനസ്സ് സംഗ്രഹം'],
+            ['റിപ്പോർട്ട് തീയതി:', new Date().toLocaleDateString('en-IN') + ' ' + new Date().toLocaleTimeString('en-IN')],
+            [],
+            ['ഇനം (Particulars)', 'തുക (Amount in ₹)', 'കുറിപ്പുകൾ (Notes)'],
+            ['ഓൺലൈൻ വരുമാനം (Online Revenue)', summary.onlineIncome, 'ഉവൈസ് (USK) ബാങ്ക് അക്കൗണ്ടിലേക്ക് വന്നത്'],
+            ['കൗണ്ടർ വരുമാനം (Counter Cash Revenue)', summary.counterIncome, 'ഷോപ്പിൽ നേരിട്ട് ലഭിച്ച ക്യാഷ്'],
+            ['ആകെ വരുമാനം (Total Revenue)', summary.totalIncome, 'ഓൺലൈൻ + കൗണ്ടർ ആകെ'],
+            [],
+            ['USK വ്യക്തിഗത ചെലവ് (Uvais)', summary.uskExpense, 'ഉവൈസ് സ്വന്തം കൈയിൽ നിന്ന് ചെലവഴിച്ചത്'],
+            ['IRS വ്യക്തിഗത ചെലവ് (Irshad)', summary.irsExpense, 'ഇർഷാദ് സ്വന്തം കൈയിൽ നിന്ന് ചെലവഴിച്ചത്'],
+            ['ഷോപ്പ് കൗണ്ടർ ക്യാഷ് ചെലവ് (Shop Cash)', summary.cashExpense, 'കൗണ്ടർ വരുമാനത്തിൽ നിന്ന് നേരിട്ട് എടുത്ത ചെലവുകൾ'],
+            ['ആകെ ചെലവുകൾ (Total Expenses)', summary.totalExpense, 'ബിസിനസ്സിന്റെ ആകെ ചെലവ്'],
+            [],
+            ['നെറ്റ് ലാഭം / നഷ്ടം (Net Profit/Loss)', summary.netProfit, summary.netProfit >= 0 ? 'ആകെ ലാഭം' : 'ആകെ നഷ്ടം'],
+            ['50% ഓരോരുത്തരുടെയും വിഹിതം', summary.partnerShare50, 'ഓരോ പങ്കാളിയുടെയും 50% ബാധ്യത/ലാഭം'],
+            [],
+            ['--- അന്തിമ സെറ്റിൽമെന്റ് കണക്ക് (Settlement) ---', '', ''],
+            ['ഇർഷാദ് ഉവൈസിന് നൽകേണ്ട തുക', summary.settlement.irsOwesUvais, '50% വിഹിതത്തിൽ നിന്ന് IRS ചെലവഴിച്ച തുക കുറച്ചുള്ള ബാക്കി'],
+            ['ഷോപ്പ് കൗണ്ടർ ക്യാഷ് മിച്ചം', summary.settlement.shopCashToUvais, 'കൗണ്ടർ വരുമാനം (₹' + summary.counterIncome + ') - കൗണ്ടർ ചെലവ് (₹' + summary.cashExpense + ')'],
+            ['ഉവൈസിന് ആകെ ലഭിക്കേണ്ടത്', summary.settlement.uskReimbursementNeeded, 'ഇർഷാദ് നൽകുന്ന തുക + ഷോപ്പ് അക്കൗണ്ടിലെ മുഴുവൻ മിച്ച ക്യാഷും']
+        ];
+    }
+
+    // Helper: Build Monthly P&L AOA
+    function buildMonthlyAOA(months) {
+        const rows = [
+            ['ആയുർപീടിക - പ്രതിമാസ ലാഭനഷ്ട റിപ്പോർട്ട് (Monthly Profit & Loss)'],
+            [],
+            ['മാസം (Month)', 'ഓൺലൈൻ വരുമാനം', 'കൗണ്ടർ വരുമാനം', 'ആകെ വരുമാനം', 'USK ചെലവ്', 'IRS ചെലവ്', 'ഷോപ്പ് ക്യാഷ് ചെലവ്', 'ആകെ ചെലവ്', 'ലാഭം / നഷ്ടം (Net)', 'എൻട്രികളുടെ എണ്ണം']
+        ];
+
+        let totOnline = 0, totCounter = 0, totInc = 0;
+        let totUsk = 0, totIrs = 0, totCash = 0, totExp = 0, totNet = 0, totTx = 0;
+
+        months.forEach(m => {
+            rows.push([
+                m.month,
+                m.onlineIncome,
+                m.counterIncome,
+                m.totalIncome,
+                m.uskExpense,
+                m.irsExpense,
+                m.cashExpense,
+                m.totalExpense,
+                m.netProfit,
+                m.transactionCount
+            ]);
+
+            totOnline += m.onlineIncome;
+            totCounter += m.counterIncome;
+            totInc += m.totalIncome;
+            totUsk += m.uskExpense;
+            totIrs += m.irsExpense;
+            totCash += m.cashExpense;
+            totExp += m.totalExpense;
+            totNet += m.netProfit;
+            totTx += m.transactionCount;
+        });
+
+        rows.push([]);
+        rows.push([
+            'ആകെ തുക (TOTAL YTD)',
+            totOnline,
+            totCounter,
+            totInc,
+            totUsk,
+            totIrs,
+            totCash,
+            totExp,
+            totNet,
+            totTx
+        ]);
+
+        return rows;
+    }
+
+    // Helper: Build Expense Categories AOA
+    function buildCategoriesAOA(months) {
+        const catMap = {};
+        months.forEach(m => {
+            m.transactions.forEach(t => {
+                if (t.expense > 0) {
+                    const cat = categorizeExpense(t.description);
+                    if (!catMap[cat]) {
+                        catMap[cat] = { total: 0, usk: 0, irs: 0, cash: 0, count: 0 };
+                    }
+                    catMap[cat].total += t.expense;
+                    catMap[cat].count++;
+                    if (t.payerCategory === 'IRS') catMap[cat].irs += t.expense;
+                    else if (t.payerCategory === 'CASH') catMap[cat].cash += t.expense;
+                    else catMap[cat].usk += t.expense;
+                }
+            });
+        });
+
+        let totalAll = 0;
+        Object.values(catMap).forEach(v => totalAll += v.total);
+
+        const rows = [
+            ['ആയുർപീടിക - ചെലവ് വിഭാഗ വിശകലന റിപ്പോർട്ട് (Expense Category Breakdown)'],
+            [],
+            ['വിഭാഗം (Category)', 'ആകെ തുക (Amount ₹)', 'വിഹിതം %', 'USK നൽകിയത്', 'IRS നൽകിയത്', 'ഷോപ്പ് ക്യാഷ് നൽകിയത്', 'ഇടപാടുകളുടെ എണ്ണം']
+        ];
+
+        const sorted = Object.entries(catMap).sort((a, b) => b[1].total - a[1].total);
+        sorted.forEach(([cat, data]) => {
+            const pct = totalAll > 0 ? ((data.total / totalAll) * 100).toFixed(2) + '%' : '0%';
+            rows.push([
+                cat,
+                data.total,
+                pct,
+                data.usk,
+                data.irs,
+                data.cash,
+                data.count
+            ]);
+        });
+
+        rows.push([]);
+        rows.push(['ആകെ ചെലവ്', totalAll, '100.00%', '', '', '', '']);
+
+        return rows;
+    }
+
+    // Helper: Build Counter Cash Register AOA
+    function buildCounterCashAOA(months) {
+        const rows = [
+            ['ആയുർപീടിക - ഷോപ്പ് കൗണ്ടർ ക്യാഷ് രജിസ്റ്റർ (Counter Cash Day Book)'],
+            ['കൗണ്ടർ സെയിൽസ് തുകയും കൗണ്ടർ ക്യാഷ് ചെലവുകളും റണ്ണിംഗ് ബാലൻസും'],
+            [],
+            ['മാസം', 'തീയതി', 'വിവരണം (Description)', 'കൗണ്ടർ ക്യാഷ് ഇൻ (+In)', 'ക്യാഷ് ചെലവ് ഔട്ട് (-Out)', 'റണ്ണിംഗ് ബാലൻസ് (Balance ₹)']
+        ];
+
+        let runningBalance = 0;
+        let totalIn = 0;
+        let totalOut = 0;
+
+        months.forEach(m => {
+            m.transactions.forEach(t => {
+                const cIn = t.counterIncome || 0;
+                const cOut = (t.payerCategory === 'CASH' && t.expense > 0) ? t.expense : 0;
+
+                if (cIn > 0 || cOut > 0) {
+                    runningBalance += (cIn - cOut);
+                    totalIn += cIn;
+                    totalOut += cOut;
+
+                    rows.push([
+                        m.month,
+                        t.date || '-',
+                        t.description || (cIn > 0 ? 'കൗണ്ടർ സെയിൽസ്' : 'ഷോപ്പ് ക്യാഷ് ചെലവ്'),
+                        cIn > 0 ? cIn : '',
+                        cOut > 0 ? cOut : '',
+                        runningBalance
+                    ]);
+                }
+            });
+        });
+
+        rows.push([]);
+        rows.push(['ആകെ തുക', '', 'മിച്ചമുള്ള ഷോപ്പ് ക്യാഷ്:', totalIn, totalOut, runningBalance]);
+        return rows;
+    }
+
+    // Helper: Build Specific Payer Ledger AOA
+    function buildPayerLedgerAOA(months, targetPayer, title) {
+        const rows = [
+            [title],
+            [],
+            ['മാസം', 'തീയതി', 'വിവരണം (Description)', 'ചെലവ് (Expense ₹)', 'ചെലവ് വിഭാഗം (Category)', 'ഷീറ്റിലെ റിമാർക്സ്']
+        ];
+
+        let total = 0;
+        let count = 0;
+
+        months.forEach(m => {
+            m.transactions.forEach(t => {
+                if (t.expense > 0 && t.payerCategory === targetPayer) {
+                    total += t.expense;
+                    count++;
+                    rows.push([
+                        m.month,
+                        t.date || '-',
+                        t.description || '-',
+                        t.expense,
+                        categorizeExpense(t.description),
+                        t.rawPayer || ''
+                    ]);
+                }
+            });
+        });
+
+        rows.push([]);
+        rows.push(['ആകെ ചെലവ്', '', count + ' ഇടപാടുകൾ', total, '', '']);
+        return rows;
+    }
+
+    // Helper: Build Online Sales AOA
+    function buildOnlineSalesAOA(months) {
+        const rows = [
+            ['ആയുർപീടിക - ഓൺലൈൻ വിൽപ്പന രജിസ്റ്റർ (Online Sales - Meesho / Shopify)'],
+            [],
+            ['മാസം', 'തീയതി', 'വിവരണം / പ്ലാറ്റ്‌ഫോം', 'ഓൺലൈൻ വരുമാനം (₹)']
+        ];
+
+        let total = 0;
+        let count = 0;
+
+        months.forEach(m => {
+            m.transactions.forEach(t => {
+                if (t.onlineIncome > 0) {
+                    total += t.onlineIncome;
+                    count++;
+                    rows.push([
+                        m.month,
+                        t.date || '-',
+                        t.description || 'Online Sales',
+                        t.onlineIncome
+                    ]);
+                }
+            });
+        });
+
+        rows.push([]);
+        rows.push(['ആകെ ഓൺലൈൻ വരുമാനം', count + ' ഇടപാടുകൾ', '', total]);
+        return rows;
+    }
+
+    // Helper: Build All Transactions AOA
+    function buildAllTransactionsAOA(months) {
+        const rows = [
+            ['മാസം', 'തീയതി', 'വിവരണം (Description)', 'ചെലവ് (Expense ₹)', 'ചെലവഴിച്ചത് (Payer)', 'ചെലവ് കാറ്റഗറി', 'ഓൺലൈൻ വരുമാനം (₹)', 'കൗണ്ടർ വരുമാനം (₹)']
+        ];
+
+        months.forEach(m => {
+            m.transactions.forEach(t => {
+                let payerDisplay = 'USK (ഉവൈസ്)';
+                if (t.payerCategory === 'IRS') payerDisplay = 'IRS (ഇർഷാദ്)';
+                else if (t.payerCategory === 'CASH') payerDisplay = 'CASH (ഷോപ്പ്)';
+
+                rows.push([
+                    m.month,
+                    t.date || '-',
+                    t.description || '-',
+                    t.expense > 0 ? t.expense : '',
+                    t.expense > 0 ? payerDisplay : '',
+                    t.expense > 0 ? categorizeExpense(t.description) : '',
+                    t.onlineIncome > 0 ? t.onlineIncome : '',
+                    t.counterIncome > 0 ? t.counterIncome : ''
+                ]);
+            });
+        });
+
+        return rows;
+    }
+
+    // ==========================================
+    // EXPORT FUNCTIONS TRIGGERED BY BUTTONS
+    // ==========================================
+
+    function checkDataLoaded() {
+        if (!fullData || !fullData.summary || !fullData.months) {
+            alert('ഡാറ്റ ലോഡ് ആയിട്ടില്ല. ദയവായി അല്പം കാത്തിരിക്കുക അല്ലെങ്കിൽ ഷീറ്റ് സിങ്ക് ചെയ്യുക.');
+            return false;
+        }
+        if (typeof XLSX === 'undefined') {
+            alert('എക്സൽ ലൈബ്രറി ലോഡ് ആകുന്നു. ദയവായി 2 സെക്കൻഡ് കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക.');
+            return false;
+        }
+        return true;
+    }
+
+    // 1. MASTER WORKBOOK (7 SHEETS)
+    function exportMasterExcel() {
+        if (!checkDataLoaded()) return;
+
+        const wb = XLSX.utils.book_new();
+
+        // 1. Summary
+        const wsSummary = XLSX.utils.aoa_to_sheet(buildSummaryAOA(fullData.summary));
+        wsSummary['!cols'] = [{ wch: 38 }, { wch: 22 }, { wch: 45 }];
+        XLSX.utils.book_append_sheet(wb, wsSummary, 'സെറ്റിൽമെന്റ്_സംഗ്രഹം');
+
+        // 2. Monthly P&L
+        const wsMonthly = XLSX.utils.aoa_to_sheet(buildMonthlyAOA(fullData.months));
+        wsMonthly['!cols'] = [{ wch: 14 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 16 }, { wch: 16 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 14 }];
+        XLSX.utils.book_append_sheet(wb, wsMonthly, 'പ്രതിമാസ_കണക്ക്');
+
+        // 3. Categories
+        const wsCat = XLSX.utils.aoa_to_sheet(buildCategoriesAOA(fullData.months));
+        wsCat['!cols'] = [{ wch: 40 }, { wch: 18 }, { wch: 14 }, { wch: 16 }, { wch: 16 }, { wch: 18 }, { wch: 14 }];
+        XLSX.utils.book_append_sheet(wb, wsCat, 'ചെലവ്_വിഭാഗങ്ങൾ');
+
+        // 4. Counter Cash Book
+        const wsCash = XLSX.utils.aoa_to_sheet(buildCounterCashAOA(fullData.months));
+        wsCash['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 20 }, { wch: 20 }, { wch: 22 }];
+        XLSX.utils.book_append_sheet(wb, wsCash, 'കൗണ്ടർ_ക്യാഷ്_ബുക്ക്');
+
+        // 5. IRS Ledger
+        const wsIrs = XLSX.utils.aoa_to_sheet(buildPayerLedgerAOA(fullData.months, 'IRS', 'ആയുർപീടിക - ഇർഷാദ് വ്യക്തിഗത ചെലവ് ലെഡ്ജർ (IRS Expenses)'));
+        wsIrs['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 18 }, { wch: 30 }, { wch: 16 }];
+        XLSX.utils.book_append_sheet(wb, wsIrs, 'ഇർഷാദ്_ചെലവുകൾ');
+
+        // 6. USK Ledger
+        const wsUsk = XLSX.utils.aoa_to_sheet(buildPayerLedgerAOA(fullData.months, 'USK', 'ആയുർപീടിക - ഉവൈസ് വ്യക്തിഗത ചെലവ് ലെഡ്ജർ (USK Expenses)'));
+        wsUsk['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 18 }, { wch: 30 }, { wch: 16 }];
+        XLSX.utils.book_append_sheet(wb, wsUsk, 'ഉവൈസ്_ചെലവുകൾ');
+
+        // 7. Master Transactions
+        const wsAll = XLSX.utils.aoa_to_sheet(buildAllTransactionsAOA(fullData.months));
+        wsAll['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 16 }, { wch: 18 }, { wch: 28 }, { wch: 18 }, { wch: 18 }];
+        XLSX.utils.book_append_sheet(wb, wsAll, 'മുഴുവൻ_ഇടപാടുകൾ');
+
+        const fileName = `Ayurpeedika_Master_Financial_Report_${new Date().toISOString().split('T')[0]}.xlsx`;
+        XLSX.writeFile(wb, fileName);
+    }
+
+    // 2. Monthly P&L Only
+    function exportMonthlyExcel() {
+        if (!checkDataLoaded()) return;
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(buildMonthlyAOA(fullData.months));
+        ws['!cols'] = [{ wch: 14 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 16 }, { wch: 16 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 14 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'Monthly_PL');
+        XLSX.writeFile(wb, `Ayurpeedika_Monthly_PL_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // 3. Settlement Only
+    function exportSettlementExcel() {
+        if (!checkDataLoaded()) return;
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(buildSummaryAOA(fullData.summary));
+        ws['!cols'] = [{ wch: 38 }, { wch: 22 }, { wch: 45 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'Settlement');
+        XLSX.writeFile(wb, `Ayurpeedika_Settlement_Report_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // 4. Counter Cash Book Only
+    function exportCounterCashExcel() {
+        if (!checkDataLoaded()) return;
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(buildCounterCashAOA(fullData.months));
+        ws['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 20 }, { wch: 20 }, { wch: 22 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'Counter_Cash_Book');
+        XLSX.writeFile(wb, `Ayurpeedika_Counter_Cash_Book_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // 5. Expense Categories Only
+    function exportCategoryExcel() {
+        if (!checkDataLoaded()) return;
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(buildCategoriesAOA(fullData.months));
+        ws['!cols'] = [{ wch: 40 }, { wch: 18 }, { wch: 14 }, { wch: 16 }, { wch: 16 }, { wch: 18 }, { wch: 14 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'Expense_Categories');
+        XLSX.writeFile(wb, `Ayurpeedika_Expense_Categories_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // 6. IRS Expenses Only
+    function exportIrsExcel() {
+        if (!checkDataLoaded()) return;
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(buildPayerLedgerAOA(fullData.months, 'IRS', 'ആയുർപീടിക - ഇർഷാദ് വ്യക്തിഗത ചെലവ് ലെഡ്ജർ (IRS Expenses)'));
+        ws['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 18 }, { wch: 30 }, { wch: 16 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'IRS_Expenses');
+        XLSX.writeFile(wb, `Ayurpeedika_IRS_Expenses_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // 7. USK Expenses Only
+    function exportUskExcel() {
+        if (!checkDataLoaded()) return;
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(buildPayerLedgerAOA(fullData.months, 'USK', 'ആയുർപീടിക - ഉവൈസ് വ്യക്തിഗത ചെലവ് ലെഡ്ജർ (USK Expenses)'));
+        ws['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 18 }, { wch: 30 }, { wch: 16 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'USK_Expenses');
+        XLSX.writeFile(wb, `Ayurpeedika_USK_Expenses_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // 8. Online Sales Only
+    function exportOnlineSalesExcel() {
+        if (!checkDataLoaded()) return;
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(buildOnlineSalesAOA(fullData.months));
+        ws['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 20 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'Online_Sales');
+        XLSX.writeFile(wb, `Ayurpeedika_Online_Sales_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // 9. All Master Transactions
+    function exportAllTransactionsExcel() {
+        if (!checkDataLoaded()) return;
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(buildAllTransactionsAOA(fullData.months));
+        ws['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 16 }, { wch: 18 }, { wch: 28 }, { wch: 18 }, { wch: 18 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'Master_Transactions');
+        XLSX.writeFile(wb, `Ayurpeedika_All_Transactions_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // 10. CURRENT FILTERED TABLE EXPORT
+    function exportFilteredTableExcel() {
+        if (!checkDataLoaded()) return;
+
+        const selectedMonth = document.getElementById('monthSelect').value;
+        const selectedPayer = document.getElementById('payerSelect').value;
+        const searchKeyword = document.getElementById('searchInput').value.toLowerCase().trim();
+
+        let list = [];
+        if (selectedMonth === 'ALL') {
+            fullData.months.forEach(m => {
+                m.transactions.forEach(t => list.push({ ...t, monthName: m.month }));
+            });
+        } else {
+            const targetMonth = fullData.months.find(m => m.month === selectedMonth);
+            if (targetMonth) {
+                targetMonth.transactions.forEach(t => list.push({ ...t, monthName: targetMonth.month }));
+            }
+        }
+
+        if (selectedPayer !== 'ALL') {
+            list = list.filter(t => t.payerCategory === selectedPayer);
+        }
+
+        if (searchKeyword) {
+            list = list.filter(t => 
+                (t.description && t.description.toLowerCase().includes(searchKeyword)) ||
+                (t.rawPayer && t.rawPayer.toLowerCase().includes(searchKeyword)) ||
+                (t.date && String(t.date).toLowerCase().includes(searchKeyword))
+            );
+        }
+
+        if (list.length === 0) {
+            alert('ഡൗൺലോഡ് ചെയ്യാൻ എൻട്രികൾ ഒന്നും കാണുന്നില്ല.');
+            return;
+        }
+
+        const rows = [
+            ['ആയുർപീടിക - ഫിൽട്ടർ ചെയ്ത ഇടപാടുകൾ (Filtered Transactions Export)'],
+            ['ഫിൽട്ടർ: മാസം=' + selectedMonth + ', പേയർ=' + selectedPayer + (searchKeyword ? (', തിരഞ്ഞത്=' + searchKeyword) : '')],
+            [],
+            ['മാസം', 'തീയതി', 'വിവരണം (Description)', 'ചെലവ് (Expense ₹)', 'ചെലവഴിച്ചത് (Payer)', 'ഓൺലൈൻ വരുമാനം (₹)', 'കൗണ്ടർ വരുമാനം (₹)']
+        ];
+
+        let totExp = 0, totOnline = 0, totCounter = 0;
+
+        list.forEach(t => {
+            totExp += t.expense || 0;
+            totOnline += t.onlineIncome || 0;
+            totCounter += t.counterIncome || 0;
+
+            let payerLabel = 'USK';
+            if (t.payerCategory === 'IRS') payerLabel = 'IRS (ഇർഷാദ്)';
+            else if (t.payerCategory === 'CASH') payerLabel = 'CASH (ഷോപ്പ്)';
+            else payerLabel = t.rawPayer ? ('USK (' + t.rawPayer + ')') : 'USK';
+
+            rows.push([
+                t.monthName,
+                t.date || '-',
+                t.description || '-',
+                t.expense > 0 ? t.expense : '',
+                t.expense > 0 ? payerLabel : '',
+                t.onlineIncome > 0 ? t.onlineIncome : '',
+                t.counterIncome > 0 ? t.counterIncome : ''
+            ]);
+        });
+
+        rows.push([]);
+        rows.push(['ആകെ തുക', '', list.length + ' എൻട്രികൾ', totExp, '', totOnline, totCounter]);
+
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(rows);
+        ws['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 18 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'Filtered_Data');
+        XLSX.writeFile(wb, `Ayurpeedika_Filtered_Export_${selectedMonth}_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+    </script>
+
 </body>
 </html>

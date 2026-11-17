@@ -693,33 +693,51 @@
         }
 
         async function loadData() {
-            if (window.INITIAL_EMBEDDED_DATA && (window.location.protocol === 'file:' || !window.location.host.includes('localhost'))) {
-                fullData = window.INITIAL_EMBEDDED_DATA;
-                updateDashboardUI(fullData);
-                return;
-            }
             try {
-                // 1. Try local storage first (saved from previous sync)
-                const savedLocal = localStorage.getItem('ayurpeedika_synced_data');
-                if (savedLocal) {
-                    fullData = JSON.parse(savedLocal);
+                let candidateData = null;
+
+                // 1. Check local storage first (saved from previous sync)
+                const savedLocalStr = localStorage.getItem('ayurpeedika_synced_data');
+                if (savedLocalStr) {
+                    try {
+                        const parsed = JSON.parse(savedLocalStr);
+                        if (parsed && parsed.summary && parsed.months) {
+                            candidateData = parsed;
+                        }
+                    } catch (e) {
+                        console.warn('Failed to parse localStorage data:', e);
+                    }
+                }
+
+                // 2. Check embedded data - if embedded is newer than local storage, use embedded
+                if (window.INITIAL_EMBEDDED_DATA && window.INITIAL_EMBEDDED_DATA.summary) {
+                    if (!candidateData) {
+                        candidateData = window.INITIAL_EMBEDDED_DATA;
+                    } else {
+                        const localTime = new Date(candidateData.summary.lastUpdated || 0).getTime();
+                        const embeddedTime = new Date(window.INITIAL_EMBEDDED_DATA.summary.lastUpdated || 0).getTime();
+                        if (embeddedTime > localTime) {
+                            candidateData = window.INITIAL_EMBEDDED_DATA;
+                        }
+                    }
+                }
+
+                if (candidateData) {
+                    fullData = candidateData;
                     updateDashboardUI(fullData);
                     return;
                 }
 
-                // 2. Embedded data fallback
-                if (window.INITIAL_EMBEDDED_DATA) {
-                    fullData = window.INITIAL_EMBEDDED_DATA;
-                    updateDashboardUI(fullData);
-                    return;
-                }
-
-                // 3. Fallback to API if server is running
-                const res = await fetch('/api/data');
-                const result = await res.json();
-                if (result.success && result.data) {
-                    fullData = result.data;
-                    updateDashboardUI(fullData);
+                // 3. Fallback to API if server is running on localhost
+                if (window.location.host.includes('localhost')) {
+                    const res = await fetch('/api/data');
+                    const result = await res.json();
+                    if (result.success && result.data) {
+                        fullData = result.data;
+                        localStorage.setItem('ayurpeedika_synced_data', JSON.stringify(fullData));
+                        updateDashboardUI(fullData);
+                        return;
+                    }
                 }
             } catch (err) {
                 console.warn('Load data warning:', err);
@@ -990,8 +1008,10 @@
             document.getElementById('finalEqualLoss').innerText = formatINR(Math.abs(summary.partnerShare50));
 
             // Last Updated Time
-            const dateObj = new Date(summary.lastUpdated);
-            document.getElementById('lastSyncTime').innerText = `അവസാനം അപ്‌ഡേറ്റ് ചെയ്തത്: ${dateObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
+            const dateObj = new Date(summary.lastUpdated || Date.now());
+            const dateStr = dateObj.toLocaleDateString('en-GB');
+            const timeStr = dateObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('lastSyncTime').innerText = `അവസാനം അപ്‌ഡേറ്റ് ചെയ്തത്: ${dateStr}, ${timeStr}`;
 
             // Populate Month Select if not done
             const mSelect = document.getElementById('monthSelect');

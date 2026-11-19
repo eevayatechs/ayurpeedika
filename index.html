@@ -165,7 +165,266 @@
         </header>
 
         <!-- Main Container -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-8 mt-6 space-y-6">
+        
+            <!-- NAVIGATION TABS -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 mt-5">
+                <nav class="flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg backdrop-blur-md overflow-x-auto">
+                    <button id="navTabOverview" onclick="switchMainTab('overview')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-sm whitespace-nowrap">
+                        <span>🏠</span> പ്രധാന ഡാഷ്‌ബോർഡ് (Overview)
+                    </button>
+                    <button id="navTabComparison" onclick="switchMainTab('comparison')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800/80 whitespace-nowrap">
+                        <span>⚖️</span> താരതമ്യ വിശകലനം (Comparison & YoY)
+                    </button>
+                    <button id="navTabReports" onclick="switchMainTab('reports')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800/80 whitespace-nowrap">
+                        <span>📑</span> എക്സൽ റിപ്പോർട്ടുകൾ (Reports)
+                    </button>
+                </nav>
+            </div>
+
+            <!-- COMPARISON TAB VIEW -->
+            <div id="comparisonView" class="hidden max-w-7xl mx-auto px-4 sm:px-8 mt-6 space-y-6">
+                
+                <!-- Comparison Controls Card -->
+                <div class="glass-card rounded-2xl p-5 sm:p-6 border border-emerald-500/20 shadow-xl">
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <span class="p-3 rounded-2xl bg-emerald-500/10 text-emerald-400 text-2xl border border-emerald-500/20">⚖️</span>
+                            <div>
+                                <h2 class="text-xl sm:text-2xl font-bold text-white">താരതമ്യ വിശകലനവും വളർച്ചയും (Comparison & Difference)</h2>
+                                <p class="text-xs text-slate-400 mt-0.5">കഴിഞ്ഞ വർഷവും ഈ വർഷവും തമ്മിലോ, രണ്ട് മാസങ്ങൾ തമ്മിലോ, കസ്റ്റം ഡേറ്റ് റേഞ്ചുകൾ തമ്മിലോ ഉള്ള വ്യത്യാസം</p>
+                            </div>
+                        </div>
+
+                        <!-- Export Comparison Button -->
+                        <button onclick="exportCurrentComparisonExcel()" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-bold border border-slate-700 hover:border-emerald-500 transition-all shadow-md">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            <span>ഈ താരതമ്യം എക്സൽ ആക്കുക (Export)</span>
+                        </button>
+                    </div>
+
+                    <!-- Comparison Modes Selector -->
+                    <div class="flex flex-wrap items-center gap-2 mt-5">
+                        <span class="text-xs text-slate-400 font-semibold mr-1">മോഡ് തെരഞ്ഞെടുക്കുക:</span>
+                        <button id="btnModeYoY" onclick="setComparisonMode('yoy')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition-all">
+                            📅 വാർഷിക താരതമ്യം (YoY)
+                        </button>
+                        <button id="btnModeMonth" onclick="setComparisonMode('month')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white transition-all">
+                            🔄 മാസം vs മാസം (Month vs Month)
+                        </button>
+                        <button id="btnModeDateRange" onclick="setComparisonMode('daterange')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white transition-all">
+                            📆 കസ്റ്റം ഡേറ്റ് റേഞ്ച് (Date Range)
+                        </button>
+                    </div>
+
+                    <!-- Mode 1: YoY Presets Container -->
+                    <div id="yoyPresetsContainer" class="mt-4 pt-4 border-t border-slate-800/80 flex flex-wrap items-center gap-2.5">
+                        <span class="text-xs text-slate-300 font-medium">ദ്രുത താരതമ്യം (Quick YoY):</span>
+                        <button onclick="runYoYComparison('Sep.25', 'Sep.26')" class="yoy-preset-btn px-3 py-1.5 rounded-lg bg-slate-800/90 border border-slate-700 hover:border-emerald-500/50 text-xs font-semibold text-slate-200 hover:text-emerald-300 transition-all">
+                            Sep 2025 vs Sep 2026
+                        </button>
+                        <button onclick="runYoYComparison('Oct', 'Oct.26')" class="yoy-preset-btn px-3 py-1.5 rounded-lg bg-slate-800/90 border border-slate-700 hover:border-emerald-500/50 text-xs font-semibold text-slate-200 hover:text-emerald-300 transition-all">
+                            Oct 2025 vs Oct 2026
+                        </button>
+                        <button onclick="runYoYComparison('Nov', 'Nov.26')" class="yoy-preset-btn px-3 py-1.5 rounded-lg bg-slate-800/90 border border-slate-700 hover:border-emerald-500/50 text-xs font-semibold text-slate-200 hover:text-emerald-300 transition-all">
+                            Nov 2025 vs Nov 2026
+                        </button>
+                        <button onclick="runCombinedYoYComparison()" class="yoy-preset-btn px-3 py-1.5 rounded-lg bg-emerald-600/20 border border-emerald-500/40 hover:bg-emerald-600 text-xs font-bold text-emerald-300 hover:text-white transition-all">
+                            🌟 ആകെ വാർഷികം (Sep-Nov 2025 vs Sep-Nov 2026)
+                        </button>
+                    </div>
+
+                    <!-- Mode 2: Month vs Month Selectors Container -->
+                    <div id="monthSelectorsContainer" class="hidden mt-4 pt-4 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-400 mb-1">ആദ്യ മാസം (Period 1):</label>
+                            <select id="compareMonth1" onchange="runSelectedMonthComparison()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-400 mb-1">രണ്ടാമത്തെ മാസം (Period 2):</label>
+                            <select id="compareMonth2" onchange="runSelectedMonthComparison()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+                            </select>
+                        </div>
+                        <div>
+                            <button onclick="runSelectedMonthComparison()" class="w-full py-2 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors shadow-sm">
+                                താരതമ്യം ചെയ്യുക (Compare)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mode 3: Custom Date Range Container -->
+                    <div id="dateRangeContainer" class="hidden mt-4 pt-4 border-t border-slate-800/80 space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Range 1 -->
+                            <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/60">
+                                <span class="text-xs font-bold text-blue-400 block mb-2">കാലയളവ് 1 (Period 1):</span>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div>
+                                        <label class="text-[10px] text-slate-400 block mb-0.5">തീയതി മുതൽ:</label>
+                                        <input type="date" id="range1Start" value="2025-09-01" class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 text-xs">
+                                    </div>
+                                    <div>
+                                        <label class="text-[10px] text-slate-400 block mb-0.5">തീയതി വരെ:</label>
+                                        <input type="date" id="range1End" value="2025-11-30" class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 text-xs">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Range 2 -->
+                            <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/60">
+                                <span class="text-xs font-bold text-emerald-400 block mb-2">കാലയളവ് 2 (Period 2):</span>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div>
+                                        <label class="text-[10px] text-slate-400 block mb-0.5">തീയതി മുതൽ:</label>
+                                        <input type="date" id="range2Start" value="2026-09-01" class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 text-xs">
+                                    </div>
+                                    <div>
+                                        <label class="text-[10px] text-slate-400 block mb-0.5">തീയതി വരെ:</label>
+                                        <input type="date" id="range2End" value="2026-11-30" class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 text-xs">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button onclick="runCustomDateRangeComparison()" class="py-2 px-5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5">
+                                <span>⚖️ ഡേറ്റ് റേഞ്ച് താരതമ്യം ചെയ്യുക</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Comparison Heading Banner -->
+                <div class="flex items-center justify-between p-4 rounded-xl bg-slate-800/50 border border-slate-700/60">
+                    <div>
+                        <span class="text-[11px] text-slate-400 block font-sans">നിലവിലെ താരതമ്യം:</span>
+                        <h3 id="currentCompareTitle" class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+                            <span>📅</span> Oct 2025 vs Oct 2026
+                        </h3>
+                    </div>
+                    <div id="compareSummaryBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        +83.9% വരുമാന വളർച്ച
+                    </div>
+                </div>
+
+                <!-- 5 Comparison Metrics Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                    
+                    <!-- Card 1: Total Revenue -->
+                    <div class="glass-card rounded-2xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 font-medium block">ആകെ വരുമാനം (Revenue)</span>
+                            <div class="mt-2 text-xs space-y-1">
+                                <div class="flex justify-between text-slate-400"><span id="lblP1Rev">P1:</span> <span id="valP1Rev" class="font-mono font-semibold text-slate-200">₹0</span></div>
+                                <div class="flex justify-between text-slate-400"><span id="lblP2Rev">P2:</span> <span id="valP2Rev" class="font-mono font-semibold text-emerald-400">₹0</span></div>
+                            </div>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-slate-700/60 flex items-center justify-between">
+                            <span id="diffRevAmount" class="font-bold text-sm text-emerald-400">+₹0</span>
+                            <span id="diffRevPct" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">+0%</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Online Sales -->
+                    <div class="glass-card rounded-2xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 font-medium block">ഓൺലൈൻ വിൽപ്പന (Online)</span>
+                            <div class="mt-2 text-xs space-y-1">
+                                <div class="flex justify-between text-slate-400"><span id="lblP1Onl">P1:</span> <span id="valP1Onl" class="font-mono font-semibold text-slate-200">₹0</span></div>
+                                <div class="flex justify-between text-slate-400"><span id="lblP2Onl">P2:</span> <span id="valP2Onl" class="font-mono font-semibold text-blue-400">₹0</span></div>
+                            </div>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-slate-700/60 flex items-center justify-between">
+                            <span id="diffOnlAmount" class="font-bold text-sm text-blue-400">+₹0</span>
+                            <span id="diffOnlPct" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400">+0%</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Counter Sales -->
+                    <div class="glass-card rounded-2xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 font-medium block">കൗണ്ടർ വിൽപ്പന (Counter)</span>
+                            <div class="mt-2 text-xs space-y-1">
+                                <div class="flex justify-between text-slate-400"><span id="lblP1Cnt">P1:</span> <span id="valP1Cnt" class="font-mono font-semibold text-slate-200">₹0</span></div>
+                                <div class="flex justify-between text-slate-400"><span id="lblP2Cnt">P2:</span> <span id="valP2Cnt" class="font-mono font-semibold text-emerald-400">₹0</span></div>
+                            </div>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-slate-700/60 flex items-center justify-between">
+                            <span id="diffCntAmount" class="font-bold text-sm text-emerald-400">+₹0</span>
+                            <span id="diffCntPct" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">+0%</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Total Expenses -->
+                    <div class="glass-card rounded-2xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 font-medium block">ആകെ ചെലവ് (Expenses)</span>
+                            <div class="mt-2 text-xs space-y-1">
+                                <div class="flex justify-between text-slate-400"><span id="lblP1Exp">P1:</span> <span id="valP1Exp" class="font-mono font-semibold text-slate-200">₹0</span></div>
+                                <div class="flex justify-between text-slate-400"><span id="lblP2Exp">P2:</span> <span id="valP2Exp" class="font-mono font-semibold text-rose-400">₹0</span></div>
+                            </div>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-slate-700/60 flex items-center justify-between">
+                            <span id="diffExpAmount" class="font-bold text-sm text-rose-400">+₹0</span>
+                            <span id="diffExpPct" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-400">+0%</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Net Profit -->
+                    <div class="glass-card rounded-2xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 font-medium block">ലാഭം / നഷ്ടം (Net Profit)</span>
+                            <div class="mt-2 text-xs space-y-1">
+                                <div class="flex justify-between text-slate-400"><span id="lblP1Net">P1:</span> <span id="valP1Net" class="font-mono font-semibold text-slate-200">₹0</span></div>
+                                <div class="flex justify-between text-slate-400"><span id="lblP2Net">P2:</span> <span id="valP2Net" class="font-mono font-semibold text-amber-300">₹0</span></div>
+                            </div>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-slate-700/60 flex items-center justify-between">
+                            <span id="diffNetAmount" class="font-bold text-sm text-amber-300">+₹0</span>
+                            <span id="diffNetBadge" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400">Diff</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Side-by-Side Visual Chart -->
+                <div class="glass-card rounded-2xl p-5 sm:p-6">
+                    <h3 class="text-base font-bold text-white mb-1 flex items-center gap-2">
+                        <span>📊</span> സൈഡ്-ബൈ-സൈഡ് ഗ്രാഫ് താരതമ്യം (Side-by-Side Visual Comparison)
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-4">കാലയളവ് 1 ഉം കാലയളവ് 2 ഉം തമ്മിലുള്ള വരുമാനവും ചെലവും നേർക്കുനേർ താരതമ്യം</p>
+                    <div class="relative h-72 w-full">
+                        <canvas id="comparisonChartCanvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Detailed Side-by-Side Breakdown Table -->
+                <div class="glass-card rounded-2xl p-5 sm:p-6">
+                    <h3 class="text-base font-bold text-white mb-3">📋 വിശദമായ താരതമ്യ പട്ടിക (Full Comparison Breakdown Table)</h3>
+                    <div class="overflow-x-auto rounded-xl border border-slate-800">
+                        <table class="w-full text-left text-xs text-slate-300 font-mono">
+                            <thead class="bg-slate-800/90 text-slate-400 uppercase tracking-wider text-[11px]">
+                                <tr>
+                                    <th class="py-3 px-4 font-sans">ഇനം (Particulars)</th>
+                                    <th id="thPeriod1" class="py-3 px-4 text-right font-sans">കാലയളവ് 1</th>
+                                    <th id="thPeriod2" class="py-3 px-4 text-right font-sans">കാലയളവ് 2</th>
+                                    <th class="py-3 px-4 text-right font-sans">വ്യത്യാസം (Difference)</th>
+                                    <th class="py-3 px-4 text-right font-sans">വളർച്ചാ നിരക്ക് %</th>
+                                </tr>
+                            </thead>
+                            <tbody id="compareTableTbody" class="divide-y divide-slate-800">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- OVERVIEW CONTAINER -->
+            <main id="overviewContainer" class="max-w-7xl mx-auto px-4 sm:px-8 mt-6 space-y-6">
 
             <!-- Top Metric Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1806,6 +2065,449 @@
         ws['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 18 }];
         XLSX.utils.book_append_sheet(wb, ws, 'Filtered_Data');
         XLSX.writeFile(wb, `Ayurpeedika_Filtered_Export_${selectedMonth}_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+    </script>
+
+
+    <script>
+    // ==========================================
+    // TAB NAVIGATION ENGINE
+    // ==========================================
+    function switchMainTab(tabName) {
+        const overviewEl = document.getElementById('overviewContainer');
+        const comparisonEl = document.getElementById('comparisonView');
+        const reportsSection = document.getElementById('reportsSection');
+
+        const navOverview = document.getElementById('navTabOverview');
+        const navComp = document.getElementById('navTabComparison');
+        const navReports = document.getElementById('navTabReports');
+
+        // Reset classes
+        [navOverview, navComp, navReports].forEach(btn => {
+            if (btn) {
+                btn.className = 'flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800/80 whitespace-nowrap';
+            }
+        });
+
+        const activeClass = 'flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-sm whitespace-nowrap';
+
+        if (tabName === 'overview') {
+            if (overviewEl) overviewEl.classList.remove('hidden');
+            if (comparisonEl) comparisonEl.classList.add('hidden');
+            if (navOverview) navOverview.className = activeClass;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (tabName === 'comparison') {
+            if (overviewEl) overviewEl.classList.add('hidden');
+            if (comparisonEl) comparisonEl.classList.remove('hidden');
+            if (navComp) navComp.className = activeClass;
+            // Run default comparison on first open
+            if (!currentComparisonResult) {
+                runYoYComparison('Oct', 'Oct.26');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (tabName === 'reports') {
+            if (overviewEl) overviewEl.classList.remove('hidden');
+            if (comparisonEl) comparisonEl.classList.add('hidden');
+            if (navReports) navReports.className = activeClass;
+            if (reportsSection) {
+                reportsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }
+
+    // ==========================================
+    // COMPARISON & GROWTH ENGINE
+    // ==========================================
+    let currentComparisonResult = null;
+    let comparisonChartInstance = null;
+
+    const monthNameMap = {
+        'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04', 'may': '05', 'jun': '06',
+        'jul': '07', 'aug': '08', 'sep': '09', 'oct': '10', 'nov': '11', 'dec': '12'
+    };
+
+    function parseStandardDate(str, fallbackMonth) {
+        if (!str) {
+            // Assign to 15th of month
+            const cleanM = (fallbackMonth || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            let yr = cleanM.includes('26') ? '2026' : (cleanM.includes('25') ? '2025' : '2026');
+            let mo = '01';
+            for (const [k, v] of Object.entries(monthNameMap)) {
+                if (cleanM.startsWith(k)) { mo = v; break; }
+            }
+            return `${yr}-${mo}-15`;
+        }
+
+        const s = String(str).trim();
+        const dmy = s.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+        if (dmy) {
+            return `${dmy[3]}-${String(dmy[2]).padStart(2, '0')}-${String(dmy[1]).padStart(2, '0')}`;
+        }
+        const dmmy = s.match(/^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})$/);
+        if (dmmy) {
+            const mKey = dmmy[2].toLowerCase().substring(0, 3);
+            const mo = monthNameMap[mKey] || '01';
+            return `${dmmy[3]}-${mo}-${String(dmmy[1]).padStart(2, '0')}`;
+        }
+        const ymd = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+        if (ymd) {
+            return `${ymd[1]}-${String(ymd[2]).padStart(2, '0')}-${String(ymd[3]).padStart(2, '0')}`;
+        }
+        return null;
+    }
+
+    function setComparisonMode(mode) {
+        const yoyBox = document.getElementById('yoyPresetsContainer');
+        const monthBox = document.getElementById('monthSelectorsContainer');
+        const dateBox = document.getElementById('dateRangeContainer');
+
+        const btnYoY = document.getElementById('btnModeYoY');
+        const btnMonth = document.getElementById('btnModeMonth');
+        const btnDate = document.getElementById('btnModeDateRange');
+
+        const activeBtn = 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition-all';
+        const inactiveBtn = 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 border border-slate-700 hover:text-white transition-all';
+
+        btnYoY.className = mode === 'yoy' ? activeBtn : inactiveBtn;
+        btnMonth.className = mode === 'month' ? activeBtn : inactiveBtn;
+        btnDate.className = mode === 'daterange' ? activeBtn : inactiveBtn;
+
+        if (mode === 'yoy') {
+            yoyBox.classList.remove('hidden');
+            monthBox.classList.add('hidden');
+            dateBox.classList.add('hidden');
+            runYoYComparison('Oct', 'Oct.26');
+        } else if (mode === 'month') {
+            yoyBox.classList.add('hidden');
+            monthBox.classList.remove('hidden');
+            dateBox.classList.add('hidden');
+            populateCompareMonthDropdowns();
+            runSelectedMonthComparison();
+        } else if (mode === 'daterange') {
+            yoyBox.classList.add('hidden');
+            monthBox.classList.add('hidden');
+            dateBox.classList.remove('hidden');
+            runCustomDateRangeComparison();
+        }
+    }
+
+    function populateCompareMonthDropdowns() {
+        if (!fullData || !fullData.months) return;
+        const sel1 = document.getElementById('compareMonth1');
+        const sel2 = document.getElementById('compareMonth2');
+        if (!sel1 || !sel2 || sel1.options.length > 0) return;
+
+        fullData.months.forEach(m => {
+            sel1.innerHTML += `<option value="${m.month}">${m.month}</option>`;
+            sel2.innerHTML += `<option value="${m.month}">${m.month}</option>`;
+        });
+
+        sel1.value = 'Oct';
+        sel2.value = 'Oct.26';
+    }
+
+    function calculatePeriodDataFromTransactions(txList) {
+        let rev = 0, onl = 0, cnt = 0, exp = 0, usk = 0, irs = 0, cash = 0;
+        txList.forEach(t => {
+            onl += t.onlineIncome || 0;
+            cnt += t.counterIncome || 0;
+            const e = t.expense || 0;
+            if (e > 0) {
+                exp += e;
+                if (t.payerCategory === 'IRS') irs += e;
+                else if (t.payerCategory === 'CASH') cash += e;
+                else usk += e;
+            }
+        });
+        rev = onl + cnt;
+        const net = rev - exp;
+        return { rev, onl, cnt, exp, usk, irs, cash, net, count: txList.length };
+    }
+
+    function calculateMonthAggregate(monthName) {
+        const m = fullData.months.find(x => x.month === monthName);
+        if (!m) return { rev: 0, onl: 0, cnt: 0, exp: 0, usk: 0, irs: 0, cash: 0, net: 0, count: 0 };
+        return {
+            rev: m.totalIncome,
+            onl: m.onlineIncome,
+            cnt: m.counterIncome,
+            exp: m.totalExpense,
+            usk: m.uskExpense,
+            irs: m.irsExpense,
+            cash: m.cashExpense,
+            net: m.netProfit,
+            count: m.transactionCount
+        };
+    }
+
+    function runYoYComparison(m1Name, m2Name) {
+        if (!fullData) return;
+        const d1 = calculateMonthAggregate(m1Name);
+        const d2 = calculateMonthAggregate(m2Name);
+        displayComparisonResult(`${m1Name} (Last Year) vs ${m2Name} (This Year)`, m1Name, m2Name, d1, d2);
+    }
+
+    function runCombinedYoYComparison() {
+        if (!fullData) return;
+        const y2025Months = ['Sep.25', 'Oct', 'Nov'];
+        const y2026Months = ['Sep.26', 'Oct.26', 'Nov.26'];
+
+        let d1 = { rev: 0, onl: 0, cnt: 0, exp: 0, usk: 0, irs: 0, cash: 0, net: 0, count: 0 };
+        let d2 = { rev: 0, onl: 0, cnt: 0, exp: 0, usk: 0, irs: 0, cash: 0, net: 0, count: 0 };
+
+        y2025Months.forEach(mName => {
+            const agg = calculateMonthAggregate(mName);
+            d1.rev += agg.rev; d1.onl += agg.onl; d1.cnt += agg.cnt;
+            d1.exp += agg.exp; d1.usk += agg.usk; d1.irs += agg.irs; d1.cash += agg.cash;
+            d1.net += agg.net; d1.count += agg.count;
+        });
+
+        y2026Months.forEach(mName => {
+            const agg = calculateMonthAggregate(mName);
+            d2.rev += agg.rev; d2.onl += agg.onl; d2.cnt += agg.cnt;
+            d2.exp += agg.exp; d2.usk += agg.usk; d2.irs += agg.irs; d2.cash += agg.cash;
+            d2.net += agg.net; d2.count += agg.count;
+        });
+
+        displayComparisonResult('വാർഷിക ആകെ (Sep-Nov 2025 vs Sep-Nov 2026)', 'Sep-Nov 2025', 'Sep-Nov 2026', d1, d2);
+    }
+
+    function runSelectedMonthComparison() {
+        if (!fullData) return;
+        const m1 = document.getElementById('compareMonth1').value;
+        const m2 = document.getElementById('compareMonth2').value;
+        const d1 = calculateMonthAggregate(m1);
+        const d2 = calculateMonthAggregate(m2);
+        displayComparisonResult(`${m1} vs ${m2}`, m1, m2, d1, d2);
+    }
+
+    function runCustomDateRangeComparison() {
+        if (!fullData) return;
+        const s1 = document.getElementById('range1Start').value;
+        const e1 = document.getElementById('range1End').value;
+        const s2 = document.getElementById('range2Start').value;
+        const e2 = document.getElementById('range2End').value;
+
+        const txList1 = [];
+        const txList2 = [];
+
+        fullData.months.forEach(m => {
+            m.transactions.forEach(t => {
+                const norm = parseStandardDate(t.date, m.month);
+                if (norm) {
+                    if (norm >= s1 && norm <= e1) txList1.push(t);
+                    if (norm >= s2 && norm <= e2) txList2.push(t);
+                }
+            });
+        });
+
+        const d1 = calculatePeriodDataFromTransactions(txList1);
+        const d2 = calculatePeriodDataFromTransactions(txList2);
+
+        displayComparisonResult(`റേഞ്ച് താരതമ്യം: (${s1} to ${e1}) vs (${s2} to ${e2})`, `Range 1`, `Range 2`, d1, d2);
+    }
+
+    function displayComparisonResult(title, p1Label, p2Label, d1, d2) {
+        const diffRev = d2.rev - d1.rev;
+        const pctRev = d1.rev > 0 ? ((diffRev / d1.rev) * 100).toFixed(1) : (d2.rev > 0 ? '+100%' : '0%');
+
+        const diffOnl = d2.onl - d1.onl;
+        const pctOnl = d1.onl > 0 ? ((diffOnl / d1.onl) * 100).toFixed(1) : (d2.onl > 0 ? '+100%' : '0%');
+
+        const diffCnt = d2.cnt - d1.cnt;
+        const pctCnt = d1.cnt > 0 ? ((diffCnt / d1.cnt) * 100).toFixed(1) : (d2.cnt > 0 ? '+100%' : '0%');
+
+        const diffExp = d2.exp - d1.exp;
+        const pctExp = d1.exp > 0 ? ((diffExp / d1.exp) * 100).toFixed(1) : '0%';
+
+        const diffNet = d2.net - d1.net;
+
+        currentComparisonResult = {
+            title, p1Label, p2Label, d1, d2,
+            diffRev, pctRev, diffOnl, pctOnl, diffCnt, pctCnt, diffExp, pctExp, diffNet
+        };
+
+        // Title and badge
+        document.getElementById('currentCompareTitle').innerHTML = `<span>📅</span> ${title}`;
+        const badgeEl = document.getElementById('compareSummaryBadge');
+        if (diffRev >= 0) {
+            badgeEl.className = 'text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+            badgeEl.innerText = `+${formatINR(diffRev)} (${pctRev}%) വരുമാന വളർച്ച`;
+        } else {
+            badgeEl.className = 'text-xs font-bold px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30';
+            badgeEl.innerText = `${formatINR(diffRev)} (${pctRev}%) വരുമാനം കുറഞ്ഞു`;
+        }
+
+        // Labels
+        ['Rev', 'Onl', 'Cnt', 'Exp', 'Net'].forEach(k => {
+            const el1 = document.getElementById(`lblP1${k}`);
+            const el2 = document.getElementById(`lblP2${k}`);
+            if (el1) el1.innerText = p1Label + ':';
+            if (el2) el2.innerText = p2Label + ':';
+        });
+
+        // Values
+        document.getElementById('valP1Rev').innerText = formatINR(d1.rev);
+        document.getElementById('valP2Rev').innerText = formatINR(d2.rev);
+        document.getElementById('diffRevAmount').innerText = (diffRev >= 0 ? '+' : '') + formatINR(diffRev);
+        document.getElementById('diffRevAmount').className = `font-bold text-sm ${diffRev >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+        document.getElementById('diffRevPct').innerText = (diffRev >= 0 ? '+' : '') + pctRev + '%';
+        document.getElementById('diffRevPct').className = `text-[11px] font-bold px-1.5 py-0.5 rounded ${diffRev >= 0 ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'}`;
+
+        document.getElementById('valP1Onl').innerText = formatINR(d1.onl);
+        document.getElementById('valP2Onl').innerText = formatINR(d2.onl);
+        document.getElementById('diffOnlAmount').innerText = (diffOnl >= 0 ? '+' : '') + formatINR(diffOnl);
+        document.getElementById('diffOnlAmount').className = `font-bold text-sm ${diffOnl >= 0 ? 'text-blue-400' : 'text-rose-400'}`;
+        document.getElementById('diffOnlPct').innerText = (diffOnl >= 0 ? '+' : '') + pctOnl + '%';
+
+        document.getElementById('valP1Cnt').innerText = formatINR(d1.cnt);
+        document.getElementById('valP2Cnt').innerText = formatINR(d2.cnt);
+        document.getElementById('diffCntAmount').innerText = (diffCnt >= 0 ? '+' : '') + formatINR(diffCnt);
+        document.getElementById('diffCntAmount').className = `font-bold text-sm ${diffCnt >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+        document.getElementById('diffCntPct').innerText = (diffCnt >= 0 ? '+' : '') + pctCnt + '%';
+
+        document.getElementById('valP1Exp').innerText = formatINR(d1.exp);
+        document.getElementById('valP2Exp').innerText = formatINR(d2.exp);
+        document.getElementById('diffExpAmount').innerText = (diffExp >= 0 ? '+' : '') + formatINR(diffExp);
+        document.getElementById('diffExpAmount').className = `font-bold text-sm ${diffExp <= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+        document.getElementById('diffExpPct').innerText = (diffExp >= 0 ? '+' : '') + pctExp + '%';
+        document.getElementById('diffExpPct').className = `text-[11px] font-bold px-1.5 py-0.5 rounded ${diffExp <= 0 ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'}`;
+
+        document.getElementById('valP1Net').innerText = formatINR(d1.net);
+        document.getElementById('valP2Net').innerText = formatINR(d2.net);
+        document.getElementById('diffNetAmount').innerText = (diffNet >= 0 ? '+' : '') + formatINR(diffNet);
+        document.getElementById('diffNetAmount').className = `font-bold text-sm ${diffNet >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+        document.getElementById('diffNetBadge').innerText = diffNet >= 0 ? 'വളർച്ച' : 'കുറഞ്ഞു';
+
+        // Table headers
+        document.getElementById('thPeriod1').innerText = p1Label;
+        document.getElementById('thPeriod2').innerText = p2Label;
+
+        // Populate Table Rows
+        const tbody = document.getElementById('compareTableTbody');
+        const rows = [
+            { name: 'ആകെ വരുമാനം (Total Revenue)', v1: d1.rev, v2: d2.rev, diff: diffRev, pct: pctRev, isGood: diffRev >= 0 },
+            { name: '• ഓൺലൈൻ വരുമാനം (Online Sales)', v1: d1.onl, v2: d2.onl, diff: diffOnl, pct: pctOnl, isGood: diffOnl >= 0 },
+            { name: '• കൗണ്ടർ വരുമാനം (Counter Cash Sales)', v1: d1.cnt, v2: d2.cnt, diff: diffCnt, pct: pctCnt, isGood: diffCnt >= 0 },
+            { name: 'ആകെ ചെലവുകൾ (Total Expenses)', v1: d1.exp, v2: d2.exp, diff: diffExp, pct: pctExp, isGood: diffExp <= 0 },
+            { name: '• USK വ്യക്തിഗത ചെലവ് (Uvais)', v1: d1.usk, v2: d2.usk, diff: d2.usk - d1.usk, pct: d1.usk > 0 ? (((d2.usk - d1.usk)/d1.usk)*100).toFixed(1) : '0%', isGood: (d2.usk - d1.usk) <= 0 },
+            { name: '• IRS വ്യക്തിഗത ചെലവ് (Irshad)', v1: d1.irs, v2: d2.irs, diff: d2.irs - d1.irs, pct: d1.irs > 0 ? (((d2.irs - d1.irs)/d1.irs)*100).toFixed(1) : '0%', isGood: (d2.irs - d1.irs) <= 0 },
+            { name: '• ഷോപ്പ് കൗണ്ടർ ക്യാഷ് ചെലവ് (Shop Cash)', v1: d1.cash, v2: d2.cash, diff: d2.cash - d1.cash, pct: d1.cash > 0 ? (((d2.cash - d1.cash)/d1.cash)*100).toFixed(1) : '0%', isGood: (d2.cash - d1.cash) <= 0 },
+            { name: 'നെറ്റ് ലാഭം / നഷ്ടം (Net Profit / Loss)', v1: d1.net, v2: d2.net, diff: diffNet, pct: (diffNet >= 0 ? '+' : '') + formatINR(diffNet), isGood: diffNet >= 0 }
+        ];
+
+        tbody.innerHTML = rows.map(r => `
+            <tr class="hover:bg-slate-800/50 transition-colors">
+                <td class="py-2.5 px-4 font-sans font-medium text-slate-200">${r.name}</td>
+                <td class="py-2.5 px-4 text-right text-slate-300">${formatINR(r.v1)}</td>
+                <td class="py-2.5 px-4 text-right font-semibold text-white">${formatINR(r.v2)}</td>
+                <td class="py-2.5 px-4 text-right font-bold ${r.isGood ? 'text-emerald-400' : 'text-rose-400'}">
+                    ${r.diff >= 0 ? '+' : ''}${formatINR(r.diff)}
+                </td>
+                <td class="py-2.5 px-4 text-right font-semibold ${r.isGood ? 'text-emerald-400' : 'text-rose-400'}">
+                    ${typeof r.pct === 'string' && r.pct.includes('%') ? r.pct : (r.pct + '%')}
+                </td>
+            </tr>
+        `).join('');
+
+        // Render Side-by-Side Bar Chart
+        renderComparisonChart(p1Label, p2Label, d1, d2);
+    }
+
+    function renderComparisonChart(l1, l2, d1, d2) {
+        const ctx = document.getElementById('comparisonChartCanvas');
+        if (!ctx) return;
+        if (comparisonChartInstance) {
+            comparisonChartInstance.destroy();
+        }
+
+        comparisonChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['ആകെ വരുമാനം', 'ഓൺലൈൻ വിൽപ്പന', 'കൗണ്ടർ വിൽപ്പന', 'ആകെ ചെലവ്', 'നെറ്റ് ലാഭം/നഷ്ടം'],
+                datasets: [
+                    {
+                        label: l1,
+                        data: [d1.rev, d1.onl, d1.cnt, d1.exp, d1.net],
+                        backgroundColor: 'rgba(59, 130, 246, 0.75)',
+                        borderColor: '#3b82f6',
+                        borderWidth: 1.5,
+                        borderRadius: 6
+                    },
+                    {
+                        label: l2,
+                        data: [d2.rev, d2.onl, d2.cnt, d2.exp, d2.net],
+                        backgroundColor: 'rgba(16, 185, 129, 0.75)',
+                        borderColor: '#10b981',
+                        borderWidth: 1.5,
+                        borderRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#cbd5e1', font: { family: 'Noto Sans Malayalam, Manrope', size: 12 } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(c) {
+                                return c.dataset.label + ': ' + formatINR(c.parsed.y);
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8', font: { family: 'Noto Sans Malayalam', size: 11 } }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: {
+                            color: '#94a3b8',
+                            callback: function(v) { return '₹' + (v >= 100000 ? (v/100000).toFixed(1) + 'L' : v); }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function exportCurrentComparisonExcel() {
+        if (!currentComparisonResult) {
+            alert('താരതമ്യം ലോഡ് ആയിട്ടില്ല.');
+            return;
+        }
+        if (typeof XLSX === 'undefined') {
+            alert('എക്സൽ ലൈബ്രറി ലോഡ് ആകുന്നു. ദയവായി അല്പം കഴിഞ്ഞ് ശ്രമിക്കുക.');
+            return;
+        }
+
+        const res = currentComparisonResult;
+        const rows = [
+            [`ആയുർപീടിക - താരതമ്യ വിശകലന റിപ്പോർട്ട് (${res.title})`],
+            ['ജനറേറ്റ് ചെയ്ത തീയതി:', new Date().toLocaleDateString('en-IN') + ' ' + new Date().toLocaleTimeString('en-IN')],
+            [],
+            ['മെട്രിക് (Particulars)', res.p1Label, res.p2Label, 'വ്യത്യാസം (Diff ₹)', 'വളർച്ചാ നിരക്ക് %'],
+            ['ആകെ വരുമാനം (Total Revenue)', res.d1.rev, res.d2.rev, res.diffRev, res.pctRev + '%'],
+            ['• ഓൺലൈൻ വിൽപ്പന (Online Sales)', res.d1.onl, res.d2.onl, res.diffOnl, res.pctOnl + '%'],
+            ['• കൗണ്ടർ വിൽപ്പന (Counter Sales)', res.d1.cnt, res.d2.cnt, res.diffCnt, res.pctCnt + '%'],
+            ['ആകെ ചെലവുകൾ (Total Expenses)', res.d1.exp, res.d2.exp, res.diffExp, res.pctExp + '%'],
+            ['• USK ചെലവ് (Uvais)', res.d1.usk, res.d2.usk, res.d2.usk - res.d1.usk, ''],
+            ['• IRS ചെലവ് (Irshad)', res.d1.irs, res.d2.irs, res.d2.irs - res.d1.irs, ''],
+            ['• ഷോപ്പ് കൗണ്ടർ ക്യാഷ് ചെലവ് (Shop Cash)', res.d1.cash, res.d2.cash, res.d2.cash - res.d1.cash, ''],
+            ['നെറ്റ് ലാഭം / നഷ്ടം (Net Profit / Loss)', res.d1.net, res.d2.net, res.diffNet, '']
+        ];
+
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(rows);
+        ws['!cols'] = [{ wch: 38 }, { wch: 20 }, { wch: 20 }, { wch: 20 }, { wch: 18 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'Comparison_Report');
+        XLSX.writeFile(wb, `Ayurpeedika_Comparison_${new Date().toISOString().split('T')[0]}.xlsx`);
     }
     </script>
 

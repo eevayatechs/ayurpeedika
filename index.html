@@ -591,10 +591,13 @@
                             <p class="text-xs text-slate-400 mt-0.5">ജീവനക്കാരന്റെ ശമ്പളവും (₹5,000/മാസം) പങ്കാളികൾ എടുക്കുന്ന അലവൻസുകളും</p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/20">
                             നിശ്ചിത തുക: ₹5,000 / മാസം
                         </span>
+                        <button onclick="exportSalaryExcel()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white shadow-md transition-all transform hover:-translate-y-0.5">
+                            <span>📥 സാലറി എക്സൽ റിപ്പോർട്ട്</span>
+                        </button>
                     </div>
                 </div>
 
@@ -821,6 +824,21 @@
                             <p class="text-[11px] text-slate-400 mt-1">മീഷോ, ഷോപ്പിഫൈ തുടങ്ങിയ ഓൺലൈൻ പ്ലാറ്റ്‌ഫോമുകൾ വഴി ലഭിച്ച എല്ലാ വരുമാന രേഖകളും.</p>
                         </div>
                         <button onclick="exportOnlineSalesExcel()" class="mt-4 w-full py-2 px-3 rounded-lg bg-slate-700/80 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                            <span>📥 ഡൗൺലോഡ് എക്സൽ</span>
+                        </button>
+                    </div>
+
+                    <!-- Report 9: Salary & Partner Drawings -->
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 hover:border-amber-500/40 transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl group-hover:scale-110 transition-transform">💼</span>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">Salary</span>
+                            </div>
+                            <h4 class="font-bold text-white text-sm">ശമ്പള റിപ്പോർട്ട് (Salary & Drawings)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">സ്റ്റാഫ് ശമ്പളവും (₹40,000) പാർട്ണർ അലവൻസുകളും തീയതിയും മാസവും തിരിച്ചുള്ള പ്രത്യേക എക്സൽ റിപ്പോർട്ട്.</p>
+                        </div>
+                        <button onclick="exportSalaryExcel()" class="mt-4 w-full py-2 px-3 rounded-lg bg-slate-700/80 hover:bg-amber-600 text-amber-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
                             <span>📥 ഡൗൺലോഡ് എക്സൽ</span>
                         </button>
                     </div>
@@ -2049,6 +2067,70 @@
         return rows;
     }
 
+    // Helper: Build Salary & Drawings Report AOA
+    function buildSalaryAOA(months, summary) {
+        let staffTotal = 0;
+        let uskTotal = 0;
+        let irsTotal = 0;
+
+        const txRows = [];
+
+        (months || []).forEach(m => {
+            (m.transactions || []).forEach(t => {
+                if (t.expense > 0) {
+                    const desc = (t.description || '').toLowerCase();
+                    if (desc.includes('salary')) {
+                        let catName = 'സ്റ്റാഫ് ശമ്പളം (Staff Salary)';
+                        if (desc.includes('usk') || desc.includes('uvais')) {
+                            catName = 'ഉവൈസ് അലവൻസ് (USK Drawings)';
+                            uskTotal += t.expense;
+                        } else if (desc.includes('irs') || desc.includes('irshad')) {
+                            catName = 'ഇർഷാദ് അലവൻസ് (IRS Drawings)';
+                            irsTotal += t.expense;
+                        } else {
+                            staffTotal += t.expense;
+                        }
+
+                        let payerName = 'USK (ഉവൈസ്)';
+                        if (t.payerCategory === 'IRS') payerName = 'IRS (ഇർഷാദ്)';
+                        else if (t.payerCategory === 'CASH') payerName = 'CASH (ഷോപ്പ് കൗണ്ടർ)';
+
+                        txRows.push([
+                            m.month,
+                            t.date || '-',
+                            t.description || '-',
+                            catName,
+                            t.expense,
+                            payerName
+                        ]);
+                    }
+                }
+            });
+        });
+
+        const rows = [
+            ['ആയുർപീടിക - ശമ്പളവും പാർട്ണർ അലവൻസും (Salary & Drawings Report)'],
+            ['തീയതി:', new Date().toLocaleDateString('en-IN') + ' ' + new Date().toLocaleTimeString('en-IN')],
+            [],
+            ['--- സംഗ്രഹം (Summary) ---', '', '', '', ''],
+            ['ഇനം (Particulars)', 'ആകെ തുക (₹)', 'വിവരണം', '', ''],
+            ['സ്റ്റാഫ് ശമ്പളം (Staff Salary)', staffTotal, 'ജീവനക്കാരന് നൽകിയ ശമ്പളം (ബിസിനസ്സ് ചെലവ്)', '', ''],
+            ['ഉവൈസ് അലവൻസ് (USK Partner Salary)', uskTotal, 'ഉവൈസ് എടുത്ത അലവൻസ് / പാർട്ണർ ഡ്രോയിംഗ്സ്', '', ''],
+            ['ഇർഷാദ് അലവൻസ് (IRS Partner Salary)', irsTotal, 'ഇർഷാദ് എടുത്ത അലവൻസ് / പാർട്ണർ ഡ്രോയിംഗ്സ്', '', ''],
+            ['ആകെ (Total Salary & Drawings)', staffTotal + uskTotal + irsTotal, '', '', ''],
+            [],
+            ['--- എല്ലാ സാലറി / അലവൻസ് ഇടപാടുകളും (Detailed Transactions) ---', '', '', '', ''],
+            ['മാസം (Month)', 'തീയതി (Date)', 'വിവരണം (Description)', 'ഇനം (Category)', 'തുക (Amount ₹)', 'നൽകിയ അക്കൗണ്ട് (Payer)']
+        ];
+
+        txRows.forEach(r => rows.push(r));
+
+        rows.push([]);
+        rows.push(['ആകെ തുക', '', '', '', staffTotal + uskTotal + irsTotal, '']);
+
+        return rows;
+    }
+
     // Helper: Build All Transactions AOA
     function buildAllTransactionsAOA(months) {
         const rows = [
@@ -2129,6 +2211,11 @@
         wsUsk['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 18 }, { wch: 30 }, { wch: 16 }];
         XLSX.utils.book_append_sheet(wb, wsUsk, 'ഉവൈസ്_ചെലവുകൾ');
 
+        // 7. Salary & Drawings
+        const wsSalary = XLSX.utils.aoa_to_sheet(buildSalaryAOA(fullData.months, fullData.summary));
+        wsSalary['!cols'] = [{ wch: 14 }, { wch: 16 }, { wch: 32 }, { wch: 30 }, { wch: 18 }, { wch: 22 }];
+        XLSX.utils.book_append_sheet(wb, wsSalary, 'ശമ്പളം_അലവൻസ്');
+
         // 7. Master Transactions
         const wsAll = XLSX.utils.aoa_to_sheet(buildAllTransactionsAOA(fullData.months));
         wsAll['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 35 }, { wch: 16 }, { wch: 18 }, { wch: 28 }, { wch: 18 }, { wch: 18 }];
@@ -2136,6 +2223,16 @@
 
         const fileName = `Ayurpeedika_Master_Financial_Report_${new Date().toISOString().split('T')[0]}.xlsx`;
         XLSX.writeFile(wb, fileName);
+    }
+
+    // Dedicated Salary & Drawings Excel Export
+    function exportSalaryExcel() {
+        if (!checkDataLoaded()) return;
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(buildSalaryAOA(fullData.months, fullData.summary));
+        ws['!cols'] = [{ wch: 14 }, { wch: 16 }, { wch: 32 }, { wch: 30 }, { wch: 18 }, { wch: 22 }];
+        XLSX.utils.book_append_sheet(wb, ws, 'Salary_Report');
+        XLSX.writeFile(wb, `Ayurpeedika_Salary_Report_${new Date().toISOString().split('T')[0]}.xlsx`);
     }
 
     // 2. Monthly P&L Only
